@@ -1,0 +1,34 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "title": "detergente",
+      "description": "Produto de limpeza",
+      "category": "Limpeza",
+      "score": 5,
+      "image": ""
+    }
+  ],
+  "contact": [
+    {
+      "id": 1,
+      "name": "Mayra",
+      "supermarket": "Mercadinho",
+      "textField": ""
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "type": "admin",
+      "email": "admin@admin.com",
+      "password": "12345"
+    },
+    {
+      "id": 2,
+      "type": "user",
+      "email": "user@user.com",
+      "password": "12345"
+    }
+  ]
+}

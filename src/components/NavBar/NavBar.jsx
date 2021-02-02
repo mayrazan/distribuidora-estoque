@@ -1,45 +1,54 @@
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
-import Tab from "@material-ui/core/Tab";
-import TabContext from "@material-ui/lab/TabContext";
-import TabList from "@material-ui/lab/TabList";
-import { useState } from "react";
-import TabPanel from "@material-ui/lab/TabPanel";
-import Link from "@material-ui/core/Link";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import { NavLink, useHistory } from "react-router-dom";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
+  },
+  title: {
+    flexGrow: 1,
+    alignItems: "center",
+    display: "flex",
+  },
+  link: {
+    textDecoration: "none",
+    color: "white",
   },
 }));
 
-export default function NavBar({ children, page }) {
+export default function NavBar() {
   const classes = useStyles();
-  const [value, setValue] = useState("1");
+  const history = useHistory();
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  function logout() {
+    history.push("/");
+  }
 
   return (
     <div className={classes.root}>
-      <TabContext value={value}>
-        <AppBar position="static">
-          <TabList onChange={handleChange} aria-label="simple tabs example">
-            <Tab label="Home" value={page}  >
-              <Link href="/home"></Link>
-            </Tab>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" className={classes.title}>
+            <NavLink to="/home" className={classes.link}>
+              Home
+            </NavLink>
+          </Typography>
+          <Typography variant="h6" className={classes.title}>
+            <NavLink to="/contact" className={classes.link}>
+              Contato
+            </NavLink>
+          </Typography>
 
-            <Tab label="Contato" value={page} href="/contact" />
-            <Tab label="Logout" value="3" />
-          </TabList>
-        </AppBar>
-
-        <TabPanel value={page}></TabPanel>
-        <TabPanel value={page}>{children}</TabPanel>
-        <TabPanel value="3">Item Three</TabPanel>
-      </TabContext>
+          <Button color="inherit" onClick={logout}>
+            Logout
+          </Button>
+        </Toolbar>
+      </AppBar>
     </div>
   );
 }

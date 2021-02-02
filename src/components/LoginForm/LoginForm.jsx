@@ -62,7 +62,6 @@ export default function LoginForm() {
   function redirectToHome() {
     if (validateAccount().length > 0) {
       history.push("/home");
-      console.log("foi");
     } else {
       alert("Login invalido");
     }

@@ -6,7 +6,35 @@
       "description": "Produto de limpeza",
       "category": "Limpeza",
       "score": 5,
-      "image": ""
+      "image": "https://www.herbacorp.com.br/product_images/p/253/cod00411__84886_zoom.jpg",
+      "like": false
+    },
+    {
+      "id": 2,
+      "title": "sabonete",
+      "description": "Produto de higiene",
+      "category": "Higiene",
+      "score": 5,
+      "image": "https://www.herbacorp.com.br/product_images/p/253/cod00411__84886_zoom.jpg",
+      "like": false
+    },
+    {
+      "id": 3,
+      "title": "macarrão",
+      "description": "Produto alimentício",
+      "category": "Alimento",
+      "score": 5,
+      "image": "https://www.drogariaminasbrasil.com.br/media/product/5d6/macarrao-santa-amalia-espaguete-1kg-781.jpg",
+      "like": false
+    },
+    {
+      "id": 4,
+      "title": "notebook",
+      "description": "Produto eletrônico",
+      "category": "Tecnologia",
+      "score": 5,
+      "image": "https://a-static.mlcdn.com.br/618x463/notebook-samsung-book-e30-intel-core-i3-4gb-1tb-156-full-hd-windows-10/magazineluiza/135258300/44bf629ad1472f3a86f5ae8b55ed0672.jpg",
+      "like": false
     }
   ],
   "contact": [

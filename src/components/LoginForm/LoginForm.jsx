@@ -10,7 +10,7 @@ import Avatar from "@material-ui/core/Avatar";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { getUsers } from "../../services/getUsers";
+import { getDataApi } from "../../services/getDataApi";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -42,7 +42,7 @@ export default function LoginForm() {
 
   useEffect(() => {
     (async () => {
-      const response = await getUsers();
+      const response = await getDataApi("users");
       setForm(response);
     })();
   }, []);

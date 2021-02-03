@@ -46,7 +46,7 @@ export default function ProductList() {
         return el.id === id
     })
 
-    const e = product.map((el)=>{
+    product.map((el)=>{
         setScore(el.score + 1)
         return el
     })

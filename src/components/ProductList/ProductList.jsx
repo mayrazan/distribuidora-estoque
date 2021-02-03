@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getDataApi, getScore } from "../../services/getDataApi";
+import { getDataApi, updateScore } from "../../services/getDataApi";
 import Loading from "../Loading";
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
@@ -24,12 +24,20 @@ const useStyles = makeStyles({
   button: {
     justifyContent: "center",
   },
+  load: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+    position: "relative",
+    top: 300,
+  },
 });
 
 export default function ProductList() {
   const [products, setProducts] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  const [score, setScore] = useState([]);
+  const [score, setScore] = useState(0);
   const classes = useStyles();
 
   useEffect(() => {
@@ -38,28 +46,27 @@ export default function ProductList() {
       setProducts(response);
       setTimeout(() => setLoading(false), 700);
     })();
-  }, []);
+  }, [score]);
 
-  function incrementScore(id) {
-      
-    const product = products.filter((el)=>{
-        return el.id === id
-    })
+  async function incrementScore(id) {
+    const scores = products.map((value) => {
+      return { id: value.id, score: value.score };
+    });
 
-    product.map((el)=>{
-        setScore(el.score + 1)
-        return el
-    })
-     const data = getScore(id, score)
-     console.log(score)
+    const scoreSelected = scores.find((value) => {
+      return value.id === id;
+    });
 
-     return data
+    setScore(scoreSelected.score + 1);
+    await updateScore(id, { score: scoreSelected.score + 1 });
   }
 
   return (
     <>
       {isLoading ? (
-        <Loading />
+        <div className={classes.load}>
+          <Loading />
+        </div>
       ) : (
         <div className="container-products">
           {products.map((product) => {
@@ -92,7 +99,7 @@ export default function ProductList() {
                     size="small"
                     variant="contained"
                     color="primary"
-                    onClick={()=>incrementScore(product.id)}
+                    onClick={() => incrementScore(product.id)}
                   >
                     Incrementar Pontuação
                   </Button>

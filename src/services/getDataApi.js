@@ -8,37 +8,32 @@ export async function getDataApi(url) {
   return apiData;
 }
 
-export async function createUser(userForm) {
-  const userFormJson = JSON.stringify(userForm);
+export async function registerForm(page, form) {
+  const formJson = JSON.stringify(form);
   const options = {
     method: "post",
-    body: userFormJson,
+    body: formJson,
     headers: { "content-type": "application/json" },
   };
 
-  const response = await fetch(URL_API + "users", options).then((response) =>
+  const response = await fetch(URL_API + page, options).then((response) =>
     response.json().then((data) => data)
   );
 
   return response;
 }
 
-export async function getScore(id, product) {
-  //const proxyurl = "https://cors-anywhere.herokuapp.com/";
+export async function updateScore(id, product = {}) {
   const options = {
     method: "put",
-    body: JSON.stringify({
-     // id: id,
-
-      score: product.score,
-    }),
+    body: JSON.stringify(product),
     headers: { "content-type": "application/json" },
   };
 
-  const response = await fetch(
+  const result = await fetch(
     URL_API + "products/" + id,
     options
   ).then((response) => response.json().then((data) => data));
 
-  return response;
+  return result;
 }

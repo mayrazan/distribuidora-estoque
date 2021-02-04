@@ -5,9 +5,8 @@ export async function getDataApi(url) {
   return response.data;
 }
 
-export async function registerForm(form = {}) {
-  const response = await api.post("contact", form);
-  console.log(response.data)
+export async function registerForm(url, form = {}) {
+  const response = await api.post(url, form);
   return response.data;
 }
 

@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useState } from "react";
 import { registerForm } from "../../services/getDataApi";
+import { alertMessage, successMessage } from "../../utils/messages";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -14,16 +15,18 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
   form: {
     width: "100%",
     marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+  },
+  alerts: {
+    width: "100%",
+    "& > * + *": {
+      marginTop: theme.spacing(2),
+    },
   },
 }));
 
@@ -34,24 +37,25 @@ export default function ContactForm() {
     supermarket: "",
     textField: "",
   });
+  const [isMessageVisible, setMessageVisible] = useState(false);
+  const [isMessageSuccess, setMessageSuccess] = useState(false);
 
   async function onSubmit(event) {
     event.preventDefault();
     if (validateForm()) {
-      await registerForm(form);
-      alert("sucesso");
-    }
+      await registerForm("contact", form);
+      setMessageSuccess(true);
 
-    form.name = "";
-    form.supermarket = "";
-    form.textField = "";
+      setTimeout(() => window.location.reload(), 400);
+    }
   }
 
   function validateForm() {
     if (form.name !== "" && form.supermarket !== "" && form.textField !== "") {
+      setMessageVisible(false);
       return true;
     } else {
-      alert("Preencha todos os campos");
+      setMessageVisible(true);
     }
   }
 
@@ -120,6 +124,9 @@ export default function ContactForm() {
           </Button>
         </form>
       </div>
+
+      {isMessageVisible ? alertMessage(classes.alerts, 1) : ""}
+      {isMessageSuccess ? successMessage(classes.alerts) : ""}
     </Container>
   );
 }

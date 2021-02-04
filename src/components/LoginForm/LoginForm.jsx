@@ -1,7 +1,6 @@
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
@@ -9,8 +8,9 @@ import Container from "@material-ui/core/Container";
 import Avatar from "@material-ui/core/Avatar";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { getDataApi } from "../../services/getDataApi";
+import { alertMessage } from "../../utils/messages";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -30,13 +30,19 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  alerts: {
+    width: "100%",
+    "& > * + *": {
+      marginTop: theme.spacing(2),
+    },
+  },
 }));
 
 export default function LoginForm() {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [isMessageVisible, setMessageVisible] = useState(false);
   const history = useHistory();
   const [form, setForm] = useState([]);
 
@@ -58,18 +64,17 @@ export default function LoginForm() {
     });
 
     localStorage.setItem("token", JSON.stringify(response));
-    console.log(response)
+
     return response;
   }
 
-  
-
   function redirectToHome() {
     if (validateAccount().length > 0) {
+      setMessageVisible(false);
       history.push("/home");
       window.location.reload();
     } else {
-      alert("Login invalido");
+      setMessageVisible(true);
     }
   }
 
@@ -128,13 +133,15 @@ export default function LoginForm() {
           </Button>
           <Grid container>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link to="/signup" variant="body2">
                 {"Cadastre-se"}
               </Link>
             </Grid>
           </Grid>
         </form>
       </div>
+
+      {isMessageVisible ? alertMessage(classes.alerts, 1) : ""}
     </Container>
   );
 }

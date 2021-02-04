@@ -50,11 +50,11 @@ export default function ProductList() {
 
   async function incrementScore(id) {
     const elementIndex = products.findIndex((item) => item.id === id);
-    const scoreSelected = products.find((value) => {
+    const selectedScore = products.find((value) => {
       return value.id === id;
     });
 
-    await updateScore(id, { score: scoreSelected.score + 1 });
+    await updateScore(id, { score: selectedScore.score + 1 });
 
     const newArray = [...products];
     newArray[elementIndex] = {

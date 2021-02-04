@@ -37,28 +37,32 @@ const useStyles = makeStyles({
 export default function ProductList() {
   const [products, setProducts] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  const [score, setScore] = useState(0);
   const classes = useStyles();
 
   useEffect(() => {
-    (async () => {
-      const response = await getDataApi("products");
+    const loadProducts = async () => {
+      const response = await getDataApi();
       setProducts(response);
       setTimeout(() => setLoading(false), 700);
-    })();
-  }, [score]);
+    };
+    loadProducts();
+  }, []);
 
   async function incrementScore(id) {
-    const scores = products.map((value) => {
-      return { id: value.id, score: value.score };
-    });
-
-    const scoreSelected = scores.find((value) => {
+    const elementIndex = products.findIndex((item) => item.id === id);
+    const scoreSelected = products.find((value) => {
       return value.id === id;
     });
 
-    setScore(scoreSelected.score + 1);
     await updateScore(id, { score: scoreSelected.score + 1 });
+
+    const newArray = [...products];
+    newArray[elementIndex] = {
+      ...newArray[elementIndex],
+      score: newArray[elementIndex].score + 1,
+    };
+
+    setProducts(newArray);
   }
 
   return (

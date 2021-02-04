@@ -38,13 +38,14 @@ export default function ContactForm() {
   async function onSubmit(event) {
     event.preventDefault();
     if (validateForm()) {
-      await registerForm("contact", form);
+      await registerForm(form);
+      alert("sucesso");
     }
   }
 
   function validateForm() {
     if (form.name !== "" && form.supermarket !== "" && form.textField !== "") {
-      alert("sucesso");
+      return true;
     } else {
       alert("Preencha todos os campos");
     }
@@ -92,6 +93,8 @@ export default function ContactForm() {
             margin="normal"
             required
             fullWidth
+            multiline
+            rows={4}
             name="textField"
             label="Campo de texto"
             id="textField"

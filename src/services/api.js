@@ -1,3 +1,7 @@
-//export const URL_API = "http://localhost:3004/";
+import axios from "axios";
 
-export const URL_API = "https://601a9e250ee87c001706a48a.mockapi.io/";
+const api = axios.create({
+  baseURL: "https://601a9e250ee87c001706a48a.mockapi.io/",
+});
+
+export default api;

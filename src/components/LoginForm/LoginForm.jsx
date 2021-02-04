@@ -56,8 +56,13 @@ export default function LoginForm() {
     const response = form.filter((field) => {
       return field.email === email && field.password === password;
     });
+
+    localStorage.setItem("token", JSON.stringify(response));
+    
     return response;
   }
+
+  
 
   function redirectToHome() {
     if (validateAccount().length > 0) {

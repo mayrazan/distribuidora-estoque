@@ -4,6 +4,10 @@ import { Login } from "./Login/Login";
 import { Contact } from "./Contact/Contact";
 
 export function Routes() {
+
+  //let isLogged = JSON.parse(localStorage.getItem("token"));
+  //console.log(isLogged)
+  
   return (
     <Switch>
       <Route path="/" component={Login} exact />

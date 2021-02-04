@@ -41,7 +41,7 @@ export default function ProductList() {
 
   useEffect(() => {
     const loadProducts = async () => {
-      const response = await getDataApi();
+      const response = await getDataApi("products");
       setProducts(response);
       setTimeout(() => setLoading(false), 700);
     };

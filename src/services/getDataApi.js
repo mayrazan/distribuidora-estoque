@@ -1,7 +1,7 @@
 import api from "./api";
 
-export async function getDataApi() {
-  const response = await api.get("products");
+export async function getDataApi(url) {
+  const response = await api.get(url);
   return response.data;
 }
 

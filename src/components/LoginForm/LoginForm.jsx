@@ -58,7 +58,7 @@ export default function LoginForm() {
     });
 
     localStorage.setItem("token", JSON.stringify(response));
-    
+    console.log(response)
     return response;
   }
 
@@ -67,6 +67,7 @@ export default function LoginForm() {
   function redirectToHome() {
     if (validateAccount().length > 0) {
       history.push("/home");
+      window.location.reload();
     } else {
       alert("Login invalido");
     }

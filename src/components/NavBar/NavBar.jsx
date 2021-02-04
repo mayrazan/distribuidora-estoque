@@ -27,6 +27,8 @@ export default function NavBar() {
 
   function logout() {
     history.push("/");
+    localStorage.removeItem("token");
+    window.location.reload();
   }
 
   return (

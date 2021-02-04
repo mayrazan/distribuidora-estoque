@@ -41,6 +41,10 @@ export default function ContactForm() {
       await registerForm(form);
       alert("sucesso");
     }
+
+    form.name = "";
+    form.supermarket = "";
+    form.textField = "";
   }
 
   function validateForm() {

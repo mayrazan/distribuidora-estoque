@@ -1,11 +1,11 @@
 import { Alert, AlertTitle } from "@material-ui/lab";
 
-export function alertMessage(className, tipo) {
+export function alertMessage(className, type) {
   return (
     <div className={className}>
       <Alert severity="error">
         <AlertTitle>Erro</AlertTitle>
-        {tipo === 1 ? "Preencha todos os campos!" : "Email já cadastrado!"}
+        {type === 1 ? "Preencha todos os campos!" : "Email já cadastrado!"}
       </Alert>
     </div>
   );

@@ -36,6 +36,11 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(2),
     },
   },
+  link: {
+    textDecoration: "none",
+    position: "relative",
+    left: 300,
+  },
 }));
 
 export default function LoginForm() {
@@ -137,7 +142,7 @@ export default function LoginForm() {
           </Button>
           <Grid container>
             <Grid item>
-              <Link to="/signup" variant="body2">
+              <Link to="/signup" variant="body2" className={classes.link}>
                 {"Cadastre-se"}
               </Link>
             </Grid>

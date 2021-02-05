@@ -14,6 +14,8 @@ import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutline
 import FavoriteOutlinedIcon from "@material-ui/icons/FavoriteOutlined";
 import StarBorderOutlinedIcon from "@material-ui/icons/StarBorderOutlined";
 import "./ProductList.scss";
+import SelectCategory from "../SelectCategory";
+import MenuItem from "@material-ui/core/MenuItem";
 
 const useStyles = makeStyles({
   root: {
@@ -38,6 +40,7 @@ export default function ProductList() {
   const [products, setProducts] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [like, setLike] = useState(false);
+  const [category, setCategory] = useState("");
   const classes = useStyles();
 
   useEffect(() => {
@@ -80,6 +83,30 @@ export default function ProductList() {
     }
   }
 
+  const handleChange = (event) => {
+    setCategory(event.target.value);
+    console.log(category);
+  };
+
+  function selectCategory() {
+    const searchResults = products.filter((value) => {
+      return value.category === category;
+    });
+
+    console.log(searchResults)
+    return (
+      <SelectCategory value={category} handleChange={handleChange}>
+        {products.map((product) => {
+          return (
+            <MenuItem key={product.id} value={product.category}>
+              {product.category}
+            </MenuItem>
+          );
+        })}
+      </SelectCategory>
+    );
+  }
+
   return (
     <>
       {isLoading ? (
@@ -88,6 +115,7 @@ export default function ProductList() {
         </div>
       ) : (
         <div className="container-products">
+          {selectCategory()}
           {products.map((product) => {
             return (
               <Card className={classes.root} key={product.id}>

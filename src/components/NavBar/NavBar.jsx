@@ -5,6 +5,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { NavLink, useHistory } from "react-router-dom";
+//import SelectCategory from "../SelectCategory";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -39,6 +40,7 @@ export default function NavBar() {
             <NavLink to="/home" className={classes.link}>
               Home
             </NavLink>
+            {/* <SelectCategory></SelectCategory> */}
           </Typography>
           <Typography variant="h6" className={classes.title}>
             <NavLink to="/contact" className={classes.link}>

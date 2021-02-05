@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getDataApi, updateScore } from "../../services/getDataApi";
+import { getDataApi, updateProduct } from "../../services/getDataApi";
 import Loading from "../Loading";
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
@@ -11,7 +11,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutlined";
-//import FavoriteOutlinedIcon from "@material-ui/icons/FavoriteOutlined";
+import FavoriteOutlinedIcon from "@material-ui/icons/FavoriteOutlined";
 import StarBorderOutlinedIcon from "@material-ui/icons/StarBorderOutlined";
 import "./ProductList.scss";
 
@@ -37,6 +37,7 @@ const useStyles = makeStyles({
 export default function ProductList() {
   const [products, setProducts] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const [like, setLike] = useState(false);
   const classes = useStyles();
 
   useEffect(() => {
@@ -46,7 +47,7 @@ export default function ProductList() {
       setTimeout(() => setLoading(false), 700);
     };
     loadProducts();
-  }, []);
+  }, [like]);
 
   async function incrementScore(id) {
     const elementIndex = products.findIndex((item) => item.id === id);
@@ -54,7 +55,7 @@ export default function ProductList() {
       return value.id === id;
     });
 
-    await updateScore(id, { score: selectedScore.score + 1 });
+    await updateProduct(id, { score: selectedScore.score + 1 });
 
     const newArray = [...products];
     newArray[elementIndex] = {
@@ -63,6 +64,20 @@ export default function ProductList() {
     };
 
     setProducts(newArray);
+  }
+
+  async function showInterest(id) {
+    const selectedProduct = products.find((value) => {
+      return value.id === id;
+    });
+
+    if (selectedProduct.like === false) {
+      await updateProduct(id, { like: true });
+      setLike(true);
+    } else {
+      await updateProduct(id, { like: false });
+      setLike(false);
+    }
   }
 
   return (
@@ -95,7 +110,6 @@ export default function ProductList() {
                     >
                       {product.description}
                     </Typography>
-                    <FavoriteBorderOutlinedIcon />
                   </CardContent>
                 </CardActionArea>
                 <CardActions className={classes.button}>
@@ -110,6 +124,14 @@ export default function ProductList() {
                   <Typography variant="h5" color="textPrimary" component="h4">
                     {product.score}
                     <StarBorderOutlinedIcon />
+                  </Typography>
+
+                  <Typography onClick={() => showInterest(product.id)}>
+                    {product.like === false ? (
+                      <FavoriteBorderOutlinedIcon />
+                    ) : (
+                      <FavoriteOutlinedIcon />
+                    )}
                   </Typography>
                 </CardActions>
               </Card>

@@ -72,6 +72,7 @@ export default function SignUpForm() {
     } else {
       setMessageVisible(true);
       if (response > 0) {
+        setMessageVisible(false);
         setMessageError(true);
       }
     }

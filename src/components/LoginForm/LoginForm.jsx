@@ -63,7 +63,11 @@ export default function LoginForm() {
       return field.email === email && field.password === password;
     });
 
-    localStorage.setItem("token", JSON.stringify(response));
+    if (response.length > 0) {
+      localStorage.setItem("token", JSON.stringify(response));
+    } else {
+      localStorage.setItem("token", JSON.stringify(null));
+    }
 
     return response;
   }

@@ -34,23 +34,28 @@ const useStyles = makeStyles({
     position: "relative",
     top: 300,
   },
+  like: {
+    cursor: "pointer",
+  },
 });
 
 export default function ProductList() {
   const [products, setProducts] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  const [like, setLike] = useState(false);
+  //const [like, setLike] = useState(false);
   const [category, setCategory] = useState("");
+  const [search, setSearch] = useState([]);
   const classes = useStyles();
 
   useEffect(() => {
     const loadProducts = async () => {
       const response = await getDataApi("products");
       setProducts(response);
+      setSearch(response);
       setTimeout(() => setLoading(false), 700);
     };
     loadProducts();
-  }, [like]);
+  }, []);
 
   async function incrementScore(id) {
     const elementIndex = products.findIndex((item) => item.id === id);
@@ -76,27 +81,25 @@ export default function ProductList() {
 
     if (selectedProduct.like === false) {
       await updateProduct(id, { like: true });
-      setLike(true);
+     // setLike(true);
     } else {
       await updateProduct(id, { like: false });
-      setLike(false);
+     // setLike(false);
     }
+    const newArray = [...products];
+    newArray[selectedProduct.id - 1] = {
+      ...newArray[selectedProduct.id - 1],
+      like: !selectedProduct.like,
+    };
+
+    setProducts(newArray);
+    console.log(newArray);
   }
 
-  const handleChange = (event) => {
-    setCategory(event.target.value);
-    console.log(category);
-  };
-
-  function selectCategory() {
-    const searchResults = products.filter((value) => {
-      return value.category === category;
-    });
-
-    console.log(searchResults)
+  function select() {
     return (
-      <SelectCategory value={category} handleChange={handleChange}>
-        {products.map((product) => {
+      <SelectCategory value={category} setValue={setCategory}>
+        {search.map((product) => {
           return (
             <MenuItem key={product.id} value={product.category}>
               {product.category}
@@ -115,7 +118,7 @@ export default function ProductList() {
         </div>
       ) : (
         <div className="container-products">
-          {selectCategory()}
+          {select()}
           {products.map((product) => {
             return (
               <Card className={classes.root} key={product.id}>
@@ -154,7 +157,10 @@ export default function ProductList() {
                     <StarBorderOutlinedIcon />
                   </Typography>
 
-                  <Typography onClick={() => showInterest(product.id)}>
+                  <Typography
+                    onClick={() => showInterest(product.id)}
+                    className={classes.like}
+                  >
                     {product.like === false ? (
                       <FavoriteBorderOutlinedIcon />
                     ) : (

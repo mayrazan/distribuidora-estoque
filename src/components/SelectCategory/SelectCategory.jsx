@@ -1,7 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-//import { useState } from "react";
 import InputLabel from "@material-ui/core/InputLabel";
 
 const useStyles = makeStyles((theme) => ({
@@ -20,14 +19,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SelectCategory({ children, value, handleChange }) {
+export default function SelectCategory({ children, value, setValue }) {
   const classes = useStyles();
-  // const [category, setCategory] = useState("");
-
-  // const handleChange = (event) => {
-  //   setCategory(event.target.value);
-  //   console.log(category);
-  // };
 
   return (
     <div className={classes.container}>
@@ -37,7 +30,9 @@ export default function SelectCategory({ children, value, handleChange }) {
           labelId="demo-simple-select-outlined-label"
           id="demo-simple-select-outlined"
           value={value}
-          onChange={handleChange}
+          onChange={(event) => {
+            setValue(event.target.value);
+          }}
           label="Categoria"
           autoWidth
         >

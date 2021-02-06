@@ -50,12 +50,21 @@ export default function ProductList() {
   useEffect(() => {
     const loadProducts = async () => {
       const response = await getDataApi("products");
-      setProducts(response);
+
+      let filteredProducts = response;
+      setProducts(filteredProducts);
+
+      if (category !== "") {
+        filteredProducts = filteredProducts.filter(
+          (product) => product.category === category
+        );
+      }
+      setProducts(filteredProducts);
       setSearch(response);
       setTimeout(() => setLoading(false), 700);
     };
     loadProducts();
-  }, []);
+  }, [category]);
 
   async function incrementScore(id) {
     const elementIndex = products.findIndex((item) => item.id === id);
@@ -81,10 +90,10 @@ export default function ProductList() {
 
     if (selectedProduct.like === false) {
       await updateProduct(id, { like: true });
-     // setLike(true);
+      // setLike(true);
     } else {
       await updateProduct(id, { like: false });
-     // setLike(false);
+      // setLike(false);
     }
     const newArray = [...products];
     newArray[selectedProduct.id - 1] = {
@@ -96,12 +105,20 @@ export default function ProductList() {
   }
 
   function select() {
+    const categories = [
+      ...new Set(
+        search.map((product) => {
+          return product.category;
+        })
+      ),
+    ];
+
     return (
       <SelectCategory value={category} setValue={setCategory}>
-        {search.map((product) => {
+        {categories.map((product) => {
           return (
-            <MenuItem key={product.id} value={product.category}>
-              {product.category}
+            <MenuItem key={product} value={product}>
+              {product}
             </MenuItem>
           );
         })}

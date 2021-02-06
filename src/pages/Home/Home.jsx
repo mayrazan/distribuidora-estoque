@@ -4,7 +4,12 @@ import ProductList from "../../components/ProductList";
 export function Home() {
   return (
     <>
-      <NavBar />
+      <NavBar
+        home="Home"
+        contact="Contato"
+        toHome="/home"
+        toContact="contact"
+      />
       <ProductList />
     </>
   );

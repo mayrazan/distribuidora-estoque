@@ -1,6 +1,5 @@
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
@@ -11,6 +10,7 @@ import { useEffect, useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 import { getDataApi } from "../../services/getDataApi";
 import { alertMessage } from "../../utils/messages";
+import InputTextField from "../InputTextField";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -69,9 +69,12 @@ export default function LoginForm() {
     });
 
     if (response.length > 0) {
-      localStorage.setItem("token", JSON.stringify(response));
+      const type = response.map((el) => {
+        return el.type;
+      });
+      localStorage.setItem("token", JSON.stringify(type));
     } else {
-      localStorage.setItem("token", JSON.stringify(null));
+      localStorage.setItem("token", JSON.stringify(""));
     }
 
     return response;
@@ -80,7 +83,15 @@ export default function LoginForm() {
   function redirectToHome() {
     if (validateAccount().length > 0) {
       setMessageVisible(false);
-      history.push("/home");
+
+      const isLogged = JSON.parse(localStorage.getItem("token"));
+
+      if (isLogged[0] === "user") {
+        history.push("/home");
+      } else {
+        history.push("/admin-home");
+      }
+
       window.location.reload();
     } else {
       setMessageVisible(true);
@@ -99,31 +110,20 @@ export default function LoginForm() {
         </Typography>
 
         <form className={classes.form}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
+          <InputTextField
             label="Email"
             name="email"
-            autoComplete="email"
             autoFocus
             value={email}
             onChange={(event) => {
               setEmail(event.target.value);
             }}
           />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
+
+          <InputTextField
             name="password"
             label="Senha"
             type="password"
-            id="password"
-            autoComplete="current-password"
             value={password}
             onChange={(event) => {
               setPassword(event.target.value);

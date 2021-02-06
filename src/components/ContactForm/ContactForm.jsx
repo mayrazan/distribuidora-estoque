@@ -7,6 +7,7 @@ import Container from "@material-ui/core/Container";
 import { useState } from "react";
 import { registerForm } from "../../services/getDataApi";
 import { alertMessage, successMessage } from "../../utils/messages";
+import InputTextField from "../InputTextField";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -68,28 +69,17 @@ export default function ContactForm() {
         </Typography>
 
         <form className={classes.form}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="name"
-            label="Nome"
-            name="name"
-            autoFocus
+          <InputTextField
             value={form.name}
             onChange={(event) => {
               setForm({ ...form, name: event.target.value });
             }}
+            label="Nome"
+            name="name"
           />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
+          <InputTextField
             name="supermarket"
             label="Mercado"
-            id="supermarket"
             value={form.supermarket}
             onChange={(event) => {
               setForm({ ...form, supermarket: event.target.value });

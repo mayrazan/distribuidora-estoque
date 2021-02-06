@@ -93,7 +93,6 @@ export default function ProductList() {
     };
 
     setProducts(newArray);
-    console.log(newArray);
   }
 
   function select() {

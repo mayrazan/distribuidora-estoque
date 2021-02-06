@@ -1,6 +1,5 @@
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -8,6 +7,7 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { registerForm, getDataApi } from "../../services/getDataApi";
 import { alertMessage, successMessage } from "../../utils/messages";
+import InputTextField from "../InputTextField";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -92,31 +92,20 @@ export default function SignUpForm() {
         </Typography>
 
         <form className={classes.form}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
+          <InputTextField
             label="Email"
             name="email"
-            autoComplete="email"
             autoFocus
             value={form.email}
             onChange={(event) => {
               setForm({ ...form, email: event.target.value });
             }}
           />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
+
+          <InputTextField
             name="password"
             label="Senha"
             type="password"
-            id="password"
-            autoComplete="current-password"
             value={form.password}
             onChange={(event) => {
               setForm({ ...form, password: event.target.value });

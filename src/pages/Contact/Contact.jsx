@@ -4,7 +4,12 @@ import ContactForm from "../../components/ContactForm";
 export function Contact() {
   return (
     <>
-      <NavBar />
+      <NavBar
+        home="Home"
+        contact="Contato"
+        toHome="/home"
+        toContact="contact"
+      />
       <ContactForm />
     </>
   );

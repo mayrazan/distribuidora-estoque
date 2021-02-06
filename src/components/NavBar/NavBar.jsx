@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import { NavLink, useHistory } from "react-router-dom";
-//import SelectCategory from "../SelectCategory";
+import { NavLink } from "react-router-dom";
+import { Context } from "../../Context/contextAuthentication";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -22,33 +22,26 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function NavBar() {
+export default function NavBar({ home, contact, toHome, toContact }) {
   const classes = useStyles();
-  const history = useHistory();
-
-  function logout() {
-    history.push("/");
-    localStorage.removeItem("token");
-    window.location.reload();
-  }
+  const { handleLogout } = useContext(Context);
 
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            <NavLink to="/home" className={classes.link}>
-              Home
+            <NavLink to={toHome} className={classes.link}>
+              {home}
             </NavLink>
-            {/* <SelectCategory></SelectCategory> */}
           </Typography>
           <Typography variant="h6" className={classes.title}>
-            <NavLink to="/contact" className={classes.link}>
-              Contato
+            <NavLink to={toContact} className={classes.link}>
+              {contact}
             </NavLink>
           </Typography>
 
-          <Button color="inherit" onClick={logout}>
+          <Button color="inherit" onClick={handleLogout}>
             Logout
           </Button>
         </Toolbar>

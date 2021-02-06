@@ -4,7 +4,6 @@ import Loading from "../Loading";
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import "./ContactList.scss";
@@ -46,32 +45,38 @@ export default function ContactList() {
           <Loading />
         </div>
       ) : (
-        <div className="container-products">
-          {products.map((product) => {
-            return (
-              <Card className={classes.root} key={product.id}>
-                <CardActionArea>
+        <>
+          <div className="container-title">
+            <Typography gutterBottom variant="h5" component="h2">
+              Lista de Sugestões
+            </Typography>
+          </div>
+          <div className="container-products">
+            {products.map((product) => {
+              return (
+                <Card className={classes.root} key={product.id}>
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
-                      {product.name}
+                      Nome: {product.name}
                     </Typography>
                     <Typography
-                      variant="body2"
+                      variant="h6"
                       color="textSecondary"
                       component="p"
                     >
-                      {product.supermarket}
+                      Mercado: {product.supermarket}
                     </Typography>
-                  </CardContent>
-                </CardActionArea>
 
-                <Typography variant="h5" color="textPrimary" component="h4">
-                  {product.textField}
-                </Typography>
-              </Card>
-            );
-          })}
-        </div>
+                    <Typography variant="h6" color="textPrimary" component="h5">
+                      Sugestão: {product.textField}
+                    </Typography>
+                    
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        </>
       )}
     </>
   );

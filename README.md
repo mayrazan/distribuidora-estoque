@@ -26,3 +26,5 @@ Usuário e senha para acessar o sistema como administrador:
 
 usuário: admin@admin.com
 senha: 12345
+
+Para acessar como usuário/dono de mercado faça o cadastro.
